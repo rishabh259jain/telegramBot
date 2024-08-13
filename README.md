@@ -95,27 +95,32 @@ This project is a MERN stack application that integrates a Telegram bot with a M
 
 To run the tests, use the following command:
 
-```bash
-npm test
+    ```bash
+    npm test
+    ```
 
+## Diagram
 
+    ```bash
+    
+    +-------------------+        +-----------------+        +-----------------+
+    |  Telegram Bot     |        |  Kafka Producer |        |  Kafka Broker   |
+    |  /start           |        |  send messages  |        |  Topics:        |
+    |  /checkTerms      |  --->  |  to topics      |  --->  |  welcomeMessage | 
+    |  /connectWallet   |        |                 |        |  termsMessage   |
+    +-------------------+        +-----------------+        |  walletMessage  |
+                                                             +-----------------+
+    
+    +------------------+        +--------------------+        +--------------------+
+    |  Kafka Consumer  |        |  Retry Queue       |        |  Dead Letter Queue |
+    |  process messages|  --->  |  retry failed msgs |  --->  |  log & manual fix  |
+    +------------------+        +--------------------+        +--------------------+
+    
+                                |
+                                v
+                        +-------------------+
+                        |    Database       |
+                        |  update user info |
+                        +-------------------+
 
-+-------------------+        +-----------------+        +-----------------+
-|  Telegram Bot     |        |  Kafka Producer |        |  Kafka Broker   |
-|  /start           |        |  send messages  |        |  Topics:        |
-|  /checkTerms      |  --->  |  to topics      |  --->  |  welcomeMessage | 
-|  /connectWallet   |        |                 |        |  termsMessage   |
-+-------------------+        +-----------------+        |  walletMessage  |
-                                                         +-----------------+
-
-+------------------+        +--------------------+        +--------------------+
-|  Kafka Consumer  |        |  Retry Queue       |        |  Dead Letter Queue |
-|  process messages|  --->  |  retry failed msgs |  --->  |  log & manual fix  |
-+------------------+        +--------------------+        +--------------------+
-
-                            |
-                            v
-                    +-------------------+
-                    |    Database       |
-                    |  update user info |
-                    +-------------------+
+    ```
