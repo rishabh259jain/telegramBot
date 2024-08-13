@@ -95,13 +95,10 @@ This project is a MERN stack application that integrates a Telegram bot with a M
 
 To run the tests, use the following command:
 
-    ```bash
     npm test
-    ```
 
 ## Diagram
 
-    ```bash
     
     +-------------------+        +-----------------+        +-----------------+
     |  Telegram Bot     |        |  Kafka Producer |        |  Kafka Broker   |
@@ -122,5 +119,3 @@ To run the tests, use the following command:
                         |    Database       |
                         |  update user info |
                         +-------------------+
-
-    ```
